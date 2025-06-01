@@ -1,1 +1,139 @@
-hello world
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Pernikahan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8fa;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #fde2e4;
+      padding: 2em 1em;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #880e4f;
+    }
+    .couple-names {
+      font-size: 1.8em;
+      color: #c2185b;
+      margin-top: 0.5em;
+    }
+    .date-location {
+      margin: 2em 0;
+      font-size: 1.2em;
+    }
+    .countdown {
+      font-size: 1.5em;
+      color: #d6336c;
+      margin-bottom: 2em;
+    }
+    .wishes {
+      background-color: #fff0f5;
+      padding: 2em;
+    }
+    input, textarea {
+      padding: 0.5em;
+      width: 80%;
+      margin: 0.5em 0;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      background: #fff;
+      margin: 0.5em 0;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Undangan Pernikahan</h1>
+    <div class="couple-names">Nurfitri Khoerun Nisa & Khairul Ahmad</div>
+    <div class="date-location">Rabu, 28 Mei 2025<br>Lokasi: [Isi Lokasi Acara]</div>
+  </header>
+
+  <section>
+    <h2>Menuju Hari Bahagia</h2>
+    <div class="countdown" id="countdown">Menghitung...</div>
+  </section>
+
+  <section class="wishes">
+    <h2>Ucapan untuk Mempelai</h2>
+    <input type="text" id="namaTamu" placeholder="Nama Anda" /><br />
+    <textarea id="pesanTamu" placeholder="Tuliskan ucapan Anda di sini"></textarea><br />
+    <button onclick="kirimUcapan()">Kirim Ucapan</button>
+
+    <ul id="daftarUcapan"></ul>
+  </section>
+
+  <script>
+    // Hitung mundur ke 28 Mei 2025
+    const targetDate = new Date("2025-05-28T09:00:00").getTime();
+    const countdownElement = document.getElementById("countdown");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownElement.innerHTML = "Hari Pernikahan Telah Tiba!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElement.innerHTML = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Fitur Ucapan
+    function kirimUcapan() {
+      const nama = document.getElementById("namaTamu").value.trim();
+      const pesan = document.getElementById("pesanTamu").value.trim();
+      const daftar = document.getElementById("daftarUcapan");
+
+      if (nama && pesan) {
+        const item = document.createElement("li");
+        item.innerHTML = `<strong>${nama}</strong><br>${pesan}`;
+        daftar.prepend(item);
+        document.getElementById("namaTamu").value = "";
+        document.getElementById("pesanTamu").value = "";
+      } else {
+        alert("Silakan isi nama dan pesan terlebih dahulu.");
+      }
+    }
+  </script>
+</body>
+</html>
